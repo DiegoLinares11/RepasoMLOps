@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "act9-pipeline"
+version = "0.1.0"
+description = "Pipeline de scikit-learn con entry points: un comando por etapa y modelos como plugins (Actividad 9 - MLE/MLOps, UVG)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Diego Linares", email = "lin221256@uvg.edu.gt" },
+    { name = "Andy Fuentes" },
+    { name = "Christian Echeverria" },
+    { name = "Diederich Solis" },
+]
+keywords = ["scikit-learn", "pipeline", "entry-points", "plugins", "mlops"]
+dependencies = [
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "joblib>=1.3",
+]
+
+[project.optional-dependencies]
+notebook = ["jupyter", "matplotlib"]
+dev = ["pytest>=7", "build"]
+
+[project.urls]
+Repository = "https://github.com/DiegoLinares11/Actividad-9-MLOPS"
+
+# ---------------------------------------------------------------------------
+# Entry points
+# ---------------------------------------------------------------------------
+# 1) Grupo especial "console_scripts": al instalar, el instalador crea un
+#    ejecutable por línea (en Windows, Scripts\act9-entrenar.exe) que importa
+#    la función de la derecha y la llama sin argumentos.
+[project.scripts]
+act9 = "act9_pipeline.cli:main"
+act9-demo = "act9_pipeline.cli.demo:main"
+act9-datos = "act9_pipeline.cli.datos:main"
+act9-entrenar = "act9_pipeline.cli.entrenar:main"
+act9-evaluar = "act9_pipeline.cli.evaluar:main"
+act9-predecir = "act9_pipeline.cli.predecir:main"
+
+# 2) Grupo propio: no crea ejecutables, solo deja el registro en la metadata.
+#    act9-entrenar lo lee con importlib.metadata.entry_points() para saber qué
+#    familias de modelos hay. Otros paquetes pueden registrarse en el mismo
+#    grupo (ver plugins/act9-modelo-knn).
+[project.entry-points."act9_pipeline.modelos"]
+random_forest = "act9_pipeline.modelos:random_forest"
+regresion_logistica = "act9_pipeline.modelos:regresion_logistica"
+svc = "act9_pipeline.modelos:svc"
+hist_gradient_boosting = "act9_pipeline.modelos:hist_gradient_boosting"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"act9_pipeline" = ["datasets/*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

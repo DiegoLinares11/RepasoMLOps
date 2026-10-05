@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "act9-modelo-knn"
+version = "0.1.0"
+description = "Plugin de ejemplo: agrega KNeighborsClassifier a la búsqueda de act9-pipeline"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "Diego Linares", email = "lin221256@uvg.edu.gt" },
+    { name = "Andy Fuentes" },
+    { name = "Christian Echeverria" },
+    { name = "Diederich Solis" },
+]
+dependencies = ["scikit-learn>=1.3", "scipy>=1.10"]
+
+# Este paquete no tiene comandos. Solo se registra en el grupo que lee
+# act9-entrenar; con eso basta para que la familia "knn" entre a la búsqueda.
+[project.entry-points."act9_pipeline.modelos"]
+knn = "act9_modelo_knn:knn"
+
+[tool.setuptools]
+package-dir = { "" = "src" }

@@ -25,6 +25,7 @@ o empatan. Cada tema le agrega una pieza nueva a ese mismo proyecto.
 | [10](10-cicd/) | CI/CD con GitHub Actions y compuerta de calidad | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-en.mp4) | Taller 1 + Actividad 5 + Ejercicio 3 |
 | [11](11-databricks/) | Databricks, medallón, Unity Catalog y MLflow | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-en.mp4) | Ejercicio 4 + Actividad 7 |
 | [12](12-simulacro/) | **Simulacro**: 50 preguntas con respuestas | — | Todos |
+| [13](13-entry-points/) | Entry points: el pipeline como comandos y plugins | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/13-entry-points-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/13-entry-points-en.mp4) | Actividad 9 |
 
 ## 🎬 Dónde están los videos
 
@@ -76,5 +77,6 @@ python tools/build_nb.py 05-pipeline-sklearn/repaso.py
 - [Actividad4-MLOPS](https://github.com/DiegoLinares11/Actividad4-MLOPS): Docker y microservicios.
 - [Ejecicio3-MLOPS](https://github.com/DiegoLinares11/Ejecicio3-MLOPS): CI/CD con GitHub Actions y notebooks de Databricks.
 - [Tarea4-MLOPS](https://github.com/DiegoLinares11/Tarea4-MLOPS): paquete publicado en TestPyPI.
+- [Actividad-9-MLOPS](https://github.com/DiegoLinares11/Actividad-9-MLOPS): entry points, plugins y Makefile.
 - [Portafolio-MLOPS](https://github.com/Andyfer004/Portafolio-MLOPS): portafolio del equipo, Taller 1, Ejercicio 2 y Tarea 3.
 - [PF-ML](https://github.com/Andyfer004/PF-ML): proyecto final de precios de combustible.

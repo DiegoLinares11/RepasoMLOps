@@ -2,8 +2,14 @@
 
 Cada tema vive en `NN-nombre/` y corresponde a una carpeta de video local en
 `C:\Users\dlinares\Documents\videos-ia\estudio\out\<carpeta-video>\`.
-Los videos NO van en el repo (pesan demasiado y viven en la compu del estudiante);
-el README solo indica su ruta local.
+Los videos NO van en el repo (pesan demasiado): se suben como archivos del Release `videos`,
+renombrados `NN-nombre-es.mp4` y `NN-nombre-en.mp4`:
+
+```
+gh release upload videos NN-nombre-es.mp4 NN-nombre-en.mp4 --repo DiegoLinares11/RepasoMLOps --clobber
+```
+
+`--clobber` reemplaza un video que ya existía sin cambiar su link.
 
 ## Archivos por tema
 ```
@@ -20,7 +26,7 @@ por línea, y un `ejercicios.md` con tareas prácticas para hacer en la compu pr
 ## README.md (español, tono de apuntes claros, de lo básico a lo avanzado)
 Secciones en este orden:
 1. `# NN · Título`
-2. Una línea: `🎬 Video: \`<carpeta-video>\\<carpeta-video>-es.mp4\` (también en inglés: \`-en.mp4\`, y hojas de revisión \`revision-es.png\`).`
+2. Una línea con los links del Release: `🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/NN-nombre-es.mp4) · [▶️ in English](…/NN-nombre-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)`.
 3. `## 🧱 Conocimiento previo` — qué hay que entender ANTES, explicado desde cero (el estudiante pidió explícitamente que se le explique primero lo previo y luego se profundice).
 4. `## 🎯 Qué tienes que saber` — los conceptos clave construidos paso a paso, con ejemplos concretos, analogías y el POR QUÉ de cada cosa. Tablas para comparar.
 5. `## 📂 Qué hicimos en el curso` — resumen de la entrega original (repo/PDF), con links y números reales.
