@@ -36,9 +36,6 @@ Se subieron como archivos del Release y no al repo porque pesan unos 20 MB cada 
 `git clone` sigue siendo liviano. El `.gitignore` excluye `*.mp4` para que no se suban por
 accidente.
 
-Los videos de `01-champions-eda` y `02-overfitting` son los dos primeros, todavía con el Chepe
-viejo.
-
 ## 📁 Qué hay en cada tema
 
 ```
