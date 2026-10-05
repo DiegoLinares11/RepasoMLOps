@@ -1,0 +1,46 @@
+# =============================================================================
+# pyproject.toml de un PROYECTO (aplicación) gestionado con uv
+# =============================================================================
+# pyproject.toml es el archivo estándar moderno de un proyecto de Python
+# (PEP 518 / PEP 621). Sirve tanto para librerías que se publican (tema 08)
+# como para proyectos que solo se ejecutan. Formato TOML: [secciones] y clave = valor.
+#
+# Con uv (https://docs.astral.sh/uv/) el flujo es:
+#
+#   uv init repaso                 # crea pyproject.toml, .python-version, README...
+#   uv add pandas scikit-learn     # agrega a [project].dependencies, crea .venv y uv.lock
+#   uv add --dev pytest            # dependencia solo de desarrollo
+#   uv sync                        # deja .venv EXACTAMENTE como dice uv.lock
+#   uv run python entrenar.py      # ejecuta dentro del ambiente sin activarlo
+#
+# Archivos que se versionan en Git:  pyproject.toml, uv.lock, .python-version
+# Archivo que NO se versiona:        .venv/  (uv lo recrea con "uv sync")
+#
+# Con poetry es casi igual (poetry add / poetry install / poetry.lock).
+# =============================================================================
+
+[project]
+# Nombre del proyecto (con guiones). Si no lo vas a publicar, da igual que sea único.
+name = "repaso-ambientes"
+version = "0.1.0"
+description = "Ejemplo de proyecto con ambiente reproducible"
+
+# Rango de versiones de Python con las que funciona el proyecto.
+# uv usa además .python-version para saber cuál instalar EXACTAMENTE.
+requires-python = ">=3.10"
+
+# Dependencias directas, con la misma sintaxis que requirements.txt (PEP 508).
+# Aquí se escriben RANGOS; las versiones exactas quedan en uv.lock.
+dependencies = [
+    "pandas>=2.0",
+    "scikit-learn>=1.3,<2",
+    "joblib>=1.3",
+]
+
+# Grupos de dependencias de desarrollo (PEP 735): no se instalan en producción.
+# "uv sync" las incluye por defecto; "uv sync --no-dev" las omite.
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "jupyterlab>=4",
+]

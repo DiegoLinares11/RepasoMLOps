@@ -1,0 +1,110 @@
+# =============================================================================
+# ci-pytest-matrix.yml  -  EJEMPLO DE REPASO (no estaba en el curso tal cual)
+# -----------------------------------------------------------------------------
+# Workflow de "integración continua clásica" pensado para el repo del
+# Ejercicio 3: lint + pruebas automáticas con pytest en VARIAS versiones de
+# Python (matrix) + construcción de un artefacto. Cubre lo de la Actividad 5
+# (pruebas automáticas dentro del pipeline).
+#
+# Para usarlo: copiarlo a .github/workflows/ci.yml y copiar
+# ejemplos/test_pipeline.py a tests/test_pipeline.py en el repo del Ejercicio 3.
+#
+# Flujo:
+#   lint ──┐
+#          ├──> pruebas (3.10, 3.11, 3.12 en paralelo) ──> construir
+#          │
+# =============================================================================
+
+name: CI - pruebas y lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:                 # lo importante: los PR no se mezclan si esto está rojo
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"         # cada lunes 06:00 UTC: detecta si una dependencia nueva
+                                # rompió algo aunque nadie haya tocado el código
+
+jobs:
+  # ------------------------------------------------------------------
+  # 1) LINT: revisa estilo y errores obvios SIN ejecutar el código.
+  #    Es el filtro más barato: falla en segundos.
+  # ------------------------------------------------------------------
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      # ruff check: variables sin usar, imports que sobran, nombres indefinidos...
+      - run: ruff check src tests
+
+  # ------------------------------------------------------------------
+  # 2) PRUEBAS con MATRIX: el mismo job se clona una vez por cada valor.
+  #    3 versiones x 1 sistema = 3 jobs en paralelo.
+  # ------------------------------------------------------------------
+  pruebas:
+    needs: lint                       # si el lint falla, ni gastamos minutos en pruebas
+    runs-on: ${{ matrix.os }}         # el runner también puede variar con la matriz
+    strategy:
+      fail-fast: false                # si 3.10 falla, deja terminar 3.11 y 3.12
+                                      # (así ves si el problema es de UNA versión)
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]   # entre comillas: "3.10" != 3.1
+        os: [ubuntu-latest]           # se podría agregar windows-latest, macos-latest:
+                                      # habría detectado el 0.563 (Windows) vs 0.611
+                                      # (macOS) de la Actividad 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}   # lee el valor de esta copia
+          cache: pip                  # caché de paquetes; llave = hash de requirements.txt
+      - run: pip install -r requirements.txt pytest
+      # pytest descubre tests/test_*.py y corre cada función test_*.
+      # Si cualquier assert falla, pytest sale con código 1 -> job rojo.
+      - run: pytest -v
+
+  # ------------------------------------------------------------------
+  # 3) CONSTRUIR: solo si TODAS las copias de la matriz pasaron.
+  #    Produce un artefacto descargable (aquí, el modelo + métricas).
+  # ------------------------------------------------------------------
+  construir:
+    needs: pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: make instalar
+      - run: make pipeline            # extraer -> limpiar -> entrenar -> evaluar (compuerta)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: modelo-aprobado-py312
+          path: |
+            artefactos/modelo.joblib
+            artefactos/metricas.json
+          retention-days: 14          # cuánto tiempo guarda GitHub el artefacto
+
+  # ------------------------------------------------------------------
+  # (Opcional) Uso de SECRETS: valores sensibles que se guardan en
+  # Settings -> Secrets and variables -> Actions. Nunca aparecen en el log
+  # (GitHub los reemplaza por ***). Ejemplo, publicar en TestPyPI:
+  #
+  #  publicar:
+  #    needs: construir
+  #    if: github.ref == 'refs/heads/main'     # solo desde main, nunca desde un PR
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #      - run: pip install build twine && python -m build
+  #      - run: twine upload --repository testpypi dist/*
+  #        env:
+  #          TWINE_USERNAME: __token__
+  #          TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
+  # ------------------------------------------------------------------

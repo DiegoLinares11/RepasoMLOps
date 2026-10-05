@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+*.joblib
+*.pkl
+mlruns/
+dist/
+build/
+*.egg-info/
+.env
+# los videos viven en la compu, no en el repo
+*.mp4
+*.mov

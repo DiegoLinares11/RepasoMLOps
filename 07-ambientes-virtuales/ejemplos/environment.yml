@@ -1,0 +1,54 @@
+# =============================================================================
+# environment.yml comentado: la "receta" de un ambiente de CONDA
+# =============================================================================
+# Conda es otro gestor de ambientes (viene con Anaconda / Miniconda / Miniforge).
+# Diferencias clave con venv + pip:
+#   - Conda también instala PYTHON MISMO: puedes pedir python=3.12 aunque tu compu
+#     tenga 3.11. Con venv solo puedes usar un Python que ya esté instalado.
+#   - Conda instala librerías que NO son de Python (CUDA, MKL, GDAL, compiladores),
+#     ya compiladas. Por eso es popular en ciencia de datos y deep learning.
+#   - Los ambientes de conda NO viven en la carpeta del proyecto: viven en
+#     <carpeta de conda>/envs/<nombre>.
+#
+# Uso (igual en PowerShell y bash; en PowerShell hace falta "conda init powershell" una vez):
+#   conda env create -f environment.yml      # crea el ambiente desde esta receta
+#   conda activate repaso-mlops              # lo activa
+#   conda env update -f environment.yml --prune   # lo sincroniza si cambiaste el archivo
+#   conda env export --from-history > environment.yml   # regenera la receta (solo lo que pediste)
+#   conda deactivate
+#   conda env remove -n repaso-mlops         # lo borra
+# =============================================================================
+
+# Nombre del ambiente: es el que usarás en "conda activate <nombre>".
+name: repaso-mlops
+
+# Canales = "tiendas" de donde conda descarga paquetes, en orden de prioridad.
+# conda-forge es el canal comunitario, el más completo y actualizado.
+channels:
+  - conda-forge
+
+dependencies:
+  # La versión de Python es una dependencia más. Esto es lo que venv NO puede hacer.
+  - python=3.12
+
+  # Sintaxis de versiones de conda (ojo: NO es igual a pip):
+  #   pandas=2.3      -> cualquier 2.3.x  (un solo "=" significa "empieza con")
+  #   pandas==2.3.3   -> exactamente 2.3.3
+  #   pandas>=2.0     -> 2.0 o más nueva
+  - pandas>=2.0
+  - numpy=2.4
+  - scikit-learn==1.8.0
+  - scipy
+  - joblib
+  - matplotlib
+  - jupyterlab
+
+  # pip DENTRO de conda: para paquetes que no existen en los canales de conda.
+  # Regla de oro: instala con conda todo lo que puedas y con pip solo lo que falte,
+  # y siempre DESPUÉS de conda (mezclarlos al revés puede romper el ambiente).
+  - pip
+  - pip:
+      # Las opciones de pip también se pueden poner aquí. Nuestro paquete vive en
+      # TestPyPI (tema 08), así que le agregamos ese índice extra:
+      - --extra-index-url https://test.pypi.org/simple/
+      - act3-pipeline-mlops

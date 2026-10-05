@@ -1,0 +1,85 @@
+# pyproject.toml de la Actividad 1, comentado línea por línea.
+# Original: https://github.com/DiegoLinares11/Actividad1-MLOPS/blob/main/pyproject.toml
+#
+# Estructura del repo que este archivo empaqueta ("src layout"):
+#
+#   Actividad1-MLOPS/
+#   ├── pyproject.toml          <- este archivo
+#   ├── setup.py                <- shim: solo llama setup(); toda la config vive aquí
+#   └── src/
+#       └── act1_pipeline/      <- el paquete importable (import act1_pipeline)
+#           ├── __init__.py     <- expone extraer_datos, construir_pipeline, ...
+#           ├── data.py         <- extracción, filtrado, separación
+#           ├── transformers.py <- PorcentajeATexto, RatioATexto
+#           ├── pipeline.py     <- ColumnTransformer + RandomForest
+#           ├── cli.py          <- def main(): ... (lo que corre act1-demo)
+#           └── datasets/
+#               └── champions_league_matches.csv
+
+# ---------------------------------------------------------------------------
+# [build-system]: CON QUÉ se construye el paquete.
+# pip lee esta sección primero, instala estas herramientas en un entorno aislado
+# y le pide al "backend" que arme el wheel (.whl).
+# ---------------------------------------------------------------------------
+[build-system]
+requires = ["setuptools>=68", "wheel"]     # herramientas necesarias para construir
+build-backend = "setuptools.build_meta"     # el backend: setuptools hace el trabajo
+
+# ---------------------------------------------------------------------------
+# [project]: QUÉ es el paquete (metadatos estándar, PEP 621).
+# ---------------------------------------------------------------------------
+[project]
+name = "act1-pipeline"                      # nombre para pip (pip install act1-pipeline);
+                                            # el import usa guion bajo: act1_pipeline
+version = "0.1.0"                           # versión semántica MAYOR.MENOR.PARCHE
+description = "Pipeline de scikit-learn para preparación de datos (Actividad 1 - MLE/MLOps, UVG)"
+readme = "README.md"                        # se muestra como descripción larga (p. ej. en PyPI)
+requires-python = ">=3.10"                  # pip se niega a instalar en Pythons más viejos
+license = { text = "MIT" }
+authors = [
+    { name = "Diego Linares" },
+    { name = "Andy Fuentes" },
+    { name = "Christian Echeverria" },
+    { name = "Diederich Solis" },
+]
+keywords = ["scikit-learn", "pipeline", "mlops", "crisp-dm"]
+
+# Dependencias de ejecución: pip las instala automáticamente con el paquete.
+# Se usan rangos mínimos (>=) y no versiones exactas (==) porque es una LIBRERÍA:
+# tiene que convivir con lo que el compañero ya tenga instalado.
+dependencies = [
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "numpy>=1.24",
+]
+
+# Extras opcionales: solo se instalan si se piden -> pip install .[notebook]
+[project.optional-dependencies]
+notebook = ["jupyter", "notebook"]
+
+# ---------------------------------------------------------------------------
+# ENTRY POINT DE CONSOLA: la línea que convierte una función en un comando.
+# Al hacer `pip install .`, pip crea un ejecutable llamado `act1-demo`
+# (act1-demo.exe en Windows, dentro de Scripts/ del entorno) que hace:
+#     from act1_pipeline.cli import main
+#     sys.exit(main())
+# Formato:  comando = "paquete.modulo:funcion"
+# ---------------------------------------------------------------------------
+[project.scripts]
+act1-demo = "act1_pipeline.cli:main"
+
+# ---------------------------------------------------------------------------
+# [tool.setuptools]: configuración específica del backend.
+# ---------------------------------------------------------------------------
+[tool.setuptools]
+package-dir = { "" = "src" }                # "los paquetes están dentro de src/"
+
+[tool.setuptools.packages.find]
+where = ["src"]                             # busca automáticamente act1_pipeline/ ahí
+
+# Archivos que NO son .py pero tienen que viajar dentro del paquete.
+# Sin esto, el wheel no incluiría el CSV y extraer_datos() fallaría en la
+# compu del compañero. En el código se lee con importlib.resources:
+#     resources.files("act1_pipeline.datasets").joinpath("champions_league_matches.csv")
+[tool.setuptools.package-data]
+"act1_pipeline" = ["datasets/*.csv"]

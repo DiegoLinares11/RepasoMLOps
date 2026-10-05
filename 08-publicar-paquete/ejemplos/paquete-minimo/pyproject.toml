@@ -1,0 +1,31 @@
+# Paquete mínimo del tema 08. Usa setuptools (como la Actividad 1 y 3) porque,
+# si ya está instalado en tu ambiente, permite construir SIN internet:
+#   python -m pip wheel --no-build-isolation --no-deps -w dist .
+# (Python 3.12+ ya no trae setuptools en cada venv: python -m pip install setuptools.)
+# Con internet, lo normal es:  python -m pip install build  y luego  python -m build
+# La versión comentada línea por línea de un pyproject real está en
+# ../pyproject.toml (Tarea 4, hatchling) y ../pyproject-setuptools.toml (Act. 3).
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mini-champions-uvg"            # nombre de DISTRIBUCIÓN (pip install ...)
+version = "0.1.0"
+description = "Paquete minimo de practica: 8 partidos de Champions League empaquetados"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Diego Linares" }]
+dependencies = []                       # sin dependencias: se instala offline
+
+[project.scripts]
+mini-champions = "mini_champions.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]                          # disposición src/
+
+[tool.setuptools.package-data]
+mini_champions = ["datasets/*.csv"]      # sin esto, el CSV NO entra al wheel

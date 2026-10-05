@@ -1,0 +1,43 @@
+# =============================================================================
+# requirements-lock.txt: la FOTO EXACTA del ambiente (lo que hace un lock file)
+# =============================================================================
+# Se genera, NO se escribe a mano:
+#
+#   PowerShell:  python -m pip freeze | Out-File -Encoding utf8 requirements-lock.txt
+#   bash:        python -m pip freeze > requirements-lock.txt
+#
+# (En PowerShell 5, el ">" guarda en UTF-16 y pip luego no lo lee bien; por eso
+#  se usa Out-File -Encoding utf8. En PowerShell 7 ">" ya guarda en UTF-8.)
+#
+# Diferencias con requirements.txt:
+#   - Aquí TODO lleva == (versión exacta).
+#   - Aparecen paquetes que nunca pediste: son DEPENDENCIAS TRANSITIVAS
+#     (pandas necesita python-dateutil, que necesita six...). Si no las fijas,
+#     pueden cambiar solas entre una instalación y otra.
+#   - pip freeze no escribe estos comentarios: los agregamos para explicar.
+#
+# Las versiones de abajo son las que fijan los requirements.txt de la
+# Actividad 4 (entrenador y api) para el núcleo; las transitivas son un ejemplo
+# del formato y dependen del día en que hagas el freeze.
+#
+# Un lock file "de verdad" (uv.lock, poetry.lock, conda-lock) además guarda el
+# HASH de cada archivo descargado, para detectar si alguien lo alteró.
+# pip también lo soporta:  paquete==1.0 --hash=sha256:...
+# =============================================================================
+
+# --- Directas (las que pediste) --- versiones reales de la Actividad 4
+joblib==1.5.3
+numpy==2.4.1
+pandas==2.3.3
+scikit-learn==1.8.0
+scipy==1.17.1
+
+# --- Transitivas (las trajeron las de arriba) --- ejemplo del formato
+python-dateutil==2.9.0.post0   # la pide pandas para manejar fechas
+pytz==2025.2                   # la pide pandas (zonas horarias)
+six==1.17.0                    # la pide python-dateutil
+threadpoolctl==3.6.0           # la pide scikit-learn (controla hilos de BLAS)
+tzdata==2025.2                 # la pide pandas (base de datos de zonas horarias)
+
+# Reinstalar EXACTAMENTE este ambiente en otra compu:
+#   python -m pip install -r requirements-lock.txt

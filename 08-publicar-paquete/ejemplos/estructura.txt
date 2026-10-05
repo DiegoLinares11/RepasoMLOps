@@ -1,0 +1,59 @@
+ESTRUCTURA DEL PROYECTO DE LA TAREA 4 (act3-pipeline-mlops)
+===========================================================
+
+Tarea4-MLOPS/
+|-- pyproject.toml        <- TODA la configuración: build-system, metadatos,
+|                            dependencias, comando act3-demo. Sin setup.py ni setup.cfg.
+|-- README.md             <- se muestra como descripción en la página de TestPyPI
+|-- LICENSE               <- MIT; viaja dentro del wheel (dist-info/licenses/)
+|-- .env                  <- el token de TestPyPI. NO se sube (está en .gitignore)
+|-- .env.example          <- plantilla del .env, SÍ se sube
+|-- .gitignore            <- .env, .env.*, !.env.example, __pycache__/, *.py[cod]
+|-- subir_a_testpypi.ps1  <- build + twine check + twine upload, leyendo el .env
+|-- src/                  <- disposición src/: el código NO está en la raíz
+|   `-- act3_pipeline/    <- nombre de IMPORT (import act3_pipeline)
+|       |-- __init__.py   <- define qué se exporta y __version__ = "0.1.0"
+|       |-- data.py           carga del CSV con importlib.resources
+|       |-- transformers.py   PorcentajeATexto, RatioATexto ('63%', '3 of 10')
+|       |-- pipeline.py       preprocesamiento + selección + modelo
+|       |-- tuning.py         GridSearchCV, RandomizedSearchCV, HalvingGridSearchCV
+|       |-- evaluation.py     baseline, matriz de confusión, curvas
+|       |-- cli.py            main() del comando act3-demo
+|       `-- datasets/
+|           `-- champions_league_matches.csv   <- LOS DATOS VAN ADENTRO
+`-- dist/                 <- lo genera "python -m build" (no se edita a mano)
+    |-- act3_pipeline_mlops-0.1.0-py3-none-any.whl   (24 KB) lo que pip instala
+    `-- act3_pipeline_mlops-0.1.0.tar.gz             (20 KB) código fuente (sdist)
+
+
+QUÉ HAY DENTRO DEL WHEEL (verificado en la Tarea 4)
+====================================================
+
+act3_pipeline/__init__.py
+act3_pipeline/cli.py  data.py  evaluation.py  pipeline.py  tuning.py  transformers.py
+act3_pipeline/datasets/champions_league_matches.csv   <- el dataset viajó
+act3_pipeline_mlops-0.1.0.dist-info/METADATA          <- nombre, versión, dependencias, README
+act3_pipeline_mlops-0.1.0.dist-info/entry_points.txt  <- el comando act3-demo
+act3_pipeline_mlops-0.1.0.dist-info/licenses/LICENSE
+
+Fíjate:
+  - Dentro del wheel ya NO está la carpeta src/: el paquete queda listo para
+    copiarse tal cual a site-packages.
+  - La carpeta dist-info usa el nombre de DISTRIBUCIÓN normalizado
+    (act3_pipeline_mlops), y el código usa el nombre de IMPORT (act3_pipeline).
+
+
+EL MISMO PROYECTO, VERSIÓN MÍNIMA (ejemplos/paquete-minimo/ de este tema)
+==========================================================================
+
+paquete-minimo/
+|-- pyproject.toml            name = "mini-champions-uvg", backend setuptools
+|-- README.md
+|-- LICENSE
+`-- src/
+    `-- mini_champions/       import mini_champions
+        |-- __init__.py
+        |-- datos.py          lee el CSV con importlib.resources
+        |-- cli.py            comando mini-champions
+        `-- datasets/
+            `-- partidos.csv  8 partidos de la jornada 1

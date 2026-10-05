@@ -1,0 +1,64 @@
+# =============================================================================
+# requirements.txt comentado: las DEPENDENCIAS DIRECTAS de un proyecto de ML
+# =============================================================================
+# Qué es: un archivo de texto plano que pip entiende. Cada línea es un paquete
+# (y opcionalmente una condición sobre su versión). Se instala con:
+#
+#   PowerShell / bash:   python -m pip install -r requirements.txt
+#
+# Reglas del formato:
+#   - Las líneas que empiezan con # son comentarios (pip las ignora).
+#   - También se puede comentar al final de una línea:  pandas>=2.0  # comentario
+#   - El nombre del paquete NO distingue mayúsculas ni - vs _ (scikit-learn == Scikit_Learn).
+#
+# Este archivo expresa INTENCIÓN ("necesito pandas 2 o más nuevo"). Para la FOTO
+# EXACTA de lo que quedó instalado, mira requirements-lock.txt (generado con pip freeze).
+# =============================================================================
+
+# --- Núcleo científico --------------------------------------------------------
+# >= : "esta versión o cualquiera más nueva". Flexible, pero ojo: también acepta
+#      la siguiente versión MAYOR (pandas 3.x) que puede romper cosas.
+pandas>=2.0
+
+# ~= : "versión compatible". ~=1.26 significa >=1.26 y <2.0
+#      (deja subir la versión menor, no la mayor). Buen punto medio.
+numpy~=1.26
+
+# Rango explícito con coma = "Y": al menos 1.3 pero menor que 2.
+# Es la forma más clara de decir "cualquier 1.x desde la 1.3".
+scikit-learn>=1.3,<2
+
+# != excluye una versión concreta (por ejemplo, una con un bug conocido).
+scipy>=1.10,!=1.11.0
+
+# == : versión EXACTA. Máxima reproducibilidad: todos instalan lo mismo.
+#      Es lo que usamos en los Dockerfiles de la Actividad 4 (scikit-learn==1.8.0)
+#      porque el modelo serializado con joblib depende de la versión exacta.
+joblib==1.5.3
+
+# --- Visualización (sin versión: "la que sea") ---------------------------------
+# Sin condición pip instala la última disponible HOY. Mañana puede ser otra:
+# cómodo para herramientas secundarias, peligroso para el núcleo del modelo.
+matplotlib
+seaborn
+
+# --- Extras de un paquete --------------------------------------------------------
+# Los corchetes piden "extras" opcionales del paquete (aquí: uvicorn con las
+# librerías aceleradas de HTTP). Mismo truco que psycopg[binary] en la Actividad 4.
+uvicorn[standard]>=0.30
+
+# --- Marcadores de entorno -------------------------------------------------------
+# Después de ; va una condición: solo se instala si se cumple.
+# Útil cuando Windows y Linux necesitan cosas distintas.
+pywin32>=306 ; sys_platform == "win32"
+
+# --- Incluir otro archivo de requisitos ------------------------------------------
+# -r permite separar dependencias de desarrollo (pytest, ruff...) en otro archivo:
+# -r requirements-dev.txt
+
+# --- Instalar un paquete LOCAL (un wheel o una carpeta) --------------------------
+# Así instalaba la Actividad 4 la librería de la Actividad 3 antes de publicarla:
+# ./libreria/act3_pipeline-0.1.0-py3-none-any.whl
+# Y así se instala en modo editable el propio proyecto (los cambios al código se
+# ven sin reinstalar):
+# -e .

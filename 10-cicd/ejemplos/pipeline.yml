@@ -1,0 +1,142 @@
+# =============================================================================
+# pipeline.yml  -  Ejercicio 3 (Ejecicio3-MLOPS/.github/workflows/pipeline.yml)
+# -----------------------------------------------------------------------------
+# Es el workflow REAL del Ejercicio 3, con comentarios agregados para el repaso.
+# El código es idéntico al original; solo se añadieron los comentarios.
+#
+# Dónde vive: GitHub solo reconoce workflows dentro de .github/workflows/
+# (cualquier nombre .yml o .yaml). Si lo pones en otra carpeta, no corre.
+#
+# Idea general: 4 jobs encadenados con `needs:`
+#
+#   extraer ---> limpiar ---> entrenar ---> evaluar
+#      |            |             |             |
+#  crudo.csv   limpio.csv   modelo.joblib  metricas.json
+#                           + prueba.csv
+#
+# Cada job corre en una MÁQUINA VIRTUAL NUEVA Y LIMPIA. No comparten disco.
+# Por eso cada job: (1) baja el código, (2) instala Python y dependencias,
+# (3) DESCARGA el artefacto del job anterior, (4) corre su etapa,
+# (5) SUBE su propio artefacto para el siguiente.
+# =============================================================================
+
+# Nombre que aparece en la pestaña "Actions" de GitHub.
+name: Pipeline de ML
+
+# `on:` = los EVENTOS que disparan el workflow.
+# El disparador: cada push a main, cada pull request, y un boton manual.
+on:
+  push:
+    branches: [main]      # solo pushes a la rama main (no a ramas de trabajo)
+  pull_request:           # cualquier PR: se valida ANTES de mezclar (esto es la "I" de CI)
+  workflow_dispatch:      # agrega el botón "Run workflow" para correrlo a mano
+  # (no usamos `schedule:`; con él se podría reentrenar cada noche, p.ej.
+  #  schedule: - cron: "0 6 * * *")
+
+# `jobs:` = las unidades de trabajo. Por defecto corren EN PARALELO;
+# `needs:` las vuelve secuenciales.
+jobs:
+
+  # ---------------------------------------------------------------
+  # ETAPA 1 - EXTRACCION
+  # ---------------------------------------------------------------
+  extraer:                          # id del job (lo usan los `needs:` de abajo)
+    runs-on: ubuntu-latest          # el RUNNER: VM Linux que GitHub presta gratis
+    steps:                          # pasos, se ejecutan en orden dentro de la MISMA máquina
+      # `uses:` = usar una ACCIÓN ya hecha (código de otro repo, versionado con @v4).
+      - uses: actions/checkout@v4   # clona el repo en la VM (sin esto, la VM está vacía)
+      - uses: actions/setup-python@v5
+        with:                       # `with:` = parámetros de la acción
+          python-version: "3.12"    # entre comillas: 3.10 sin comillas se lee como 3.1
+          cache: pip                # guarda los paquetes de pip entre corridas (más rápido);
+                                    # la llave del caché es el hash de requirements.txt
+      # `run:` = ejecutar un COMANDO de shell. Llamamos al Makefile: mismo comando que en local.
+      - run: make instalar          # pip install -r requirements.txt
+      - run: make extraer           # python src/extraer.py  -> artefactos/crudo.csv
+      # Subir el resultado para que otro job (otra máquina) lo pueda descargar.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: datos-crudos        # nombre lógico del artefacto (el "casillero")
+          path: artefactos/crudo.csv
+
+  # ---------------------------------------------------------------
+  # ETAPA 2 - LIMPIEZA (espera a que la extraccion termine bien)
+  # ---------------------------------------------------------------
+  limpiar:
+    needs: extraer                  # no arranca hasta que `extraer` termine CON ÉXITO.
+                                    # Si extraer falla, limpiar queda "skipped".
+    runs-on: ubuntu-latest          # máquina NUEVA: no tiene crudo.csv ni nada instalado
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: make instalar
+      # Bajar el artefacto que subió el job anterior y dejarlo en artefactos/
+      - uses: actions/download-artifact@v4
+        with:
+          name: datos-crudos        # mismo nombre que en el upload
+          path: artefactos          # carpeta destino
+      - run: make limpiar           # quita 7 filas vacías y columnas con fuga (score, winner)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: datos-limpios
+          path: artefactos/limpio.csv
+
+  # ---------------------------------------------------------------
+  # ETAPA 3 - ENTRENAMIENTO
+  # ---------------------------------------------------------------
+  entrenar:
+    needs: limpiar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: make instalar
+      - uses: actions/download-artifact@v4
+        with:
+          name: datos-limpios
+          path: artefactos
+      - run: make entrenar          # ColumnTransformer + LogisticRegression(C=0.541)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: modelo
+          # `|` = bloque de texto multilínea: un artefacto puede llevar VARIOS archivos.
+          # prueba.csv viaja con el modelo para que evaluar use EXACTAMENTE el mismo
+          # conjunto de prueba que separó entrenar (si no, habría que repetir el split).
+          path: |
+            artefactos/modelo.joblib
+            artefactos/prueba.csv
+
+  # ---------------------------------------------------------------
+  # ETAPA 4 - EVALUACION (compuerta de calidad: si falla, todo falla)
+  # ---------------------------------------------------------------
+  evaluar:
+    needs: entrenar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: make instalar
+      - uses: actions/download-artifact@v4
+        with:
+          name: modelo
+          path: artefactos
+      # LA COMPUERTA: evaluar.py termina con código 1 si f1_macro < 0.40 o si no le
+      # gana al DummyClassifier(most_frequent). Un código distinto de 0 = step rojo
+      # = job rojo = workflow rojo (y el PR muestra una X).
+      - run: make evaluar
+      - uses: actions/upload-artifact@v4
+        # `if: always()` = súbelo AUNQUE el step anterior haya fallado.
+        # Justo cuando la compuerta rechaza el modelo es cuando más quieres ver las métricas.
+        if: always()
+        with:
+          name: metricas
+          path: artefactos/metricas.json

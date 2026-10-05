@@ -1,0 +1,75 @@
+# =============================================================================
+# pyproject.toml REAL de la Actividad 3 (backend: setuptools), comentado
+# Repo original: https://github.com/DiegoLinares11/Actividad3-MLOPS
+# =============================================================================
+# En tu proyecto este archivo se llamaría pyproject.toml; aquí se llama
+# pyproject-setuptools.toml para poder tenerlo junto al de la Tarea 4 y comparar.
+#
+# Diferencias con el de la Tarea 4 (hatchling):
+#   - build-backend = setuptools.build_meta
+#   - El CSV NO entra solo: hay que declararlo en [tool.setuptools.package-data]
+#   - license = { text = "MIT" } es la forma VIEJA (antes de PEP 639); hoy se
+#     escribe license = "MIT" + license-files.
+#   - El nombre de distribución (act3-pipeline) es casi igual al de import
+#     (act3_pipeline), así que no hizo falta decir dónde estaba el paquete; aun
+#     así se usa packages.find para la disposición src/.
+#   - Este proyecto además tenía un setup.py de 3 líneas ("shim") solo para
+#     herramientas viejas que todavía ejecutan "python setup.py ...". Con
+#     pyproject.toml ya no hace falta.
+# =============================================================================
+
+[build-system]
+# setuptools es el backend histórico. "wheel" en requires ya no es necesario
+# con setuptools moderno, pero no estorba.
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "act3-pipeline"
+version = "0.1.0"
+description = "Calibracion de hiperparametros de un pipeline de scikit-learn (Actividad 3 - MLE/MLOps, UVG)"
+readme = "README.md"
+requires-python = ">=3.10"
+# Forma antigua de declarar la licencia (tabla con "text"). Funciona, pero
+# setuptools >= 77 avisa que está obsoleta.
+license = { text = "MIT" }
+authors = [
+    { name = "Diego Linares", email = "lin221256@uvg.edu.gt" },
+]
+keywords = ["scikit-learn", "pipeline", "hyperparameter-tuning", "mlops", "crisp-dm"]
+# Igual que en la Tarea 4: rangos, porque es una librería.
+dependencies = [
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+notebook = ["jupyter", "notebook", "matplotlib"]
+dev = ["pytest>=7", "build"]
+
+[project.urls]
+Repository = "https://github.com/DiegoLinares11/Actividad3-MLOPS"
+
+[project.scripts]
+act3-demo = "act3_pipeline.cli:main"
+
+# -----------------------------------------------------------------------------
+# Configuración propia de setuptools
+# -----------------------------------------------------------------------------
+[tool.setuptools]
+# "Los paquetes de la raíz ('') están en la carpeta src/". Es la disposición src/.
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+# Busca automáticamente las carpetas con __init__.py dentro de src/
+# (encuentra act3_pipeline).
+where = ["src"]
+
+[tool.setuptools.package-data]
+# LA LÍNEA QUE HACE QUE EL DATASET VIAJE DENTRO DEL WHEEL.
+# setuptools solo empaqueta archivos .py por defecto. Sin esto, el paquete se
+# instala pero cargar_datos() falla con FileNotFoundError en otra compu.
+# Clave = nombre del paquete de import; valor = patrones relativos a su carpeta.
+"act3_pipeline" = ["datasets/*.csv"]

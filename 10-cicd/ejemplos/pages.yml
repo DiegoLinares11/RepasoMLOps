@@ -1,0 +1,61 @@
+# =============================================================================
+# pages.yml  -  Taller 1 (Portafolio-MLOPS/.github/workflows/pages.yml)
+# -----------------------------------------------------------------------------
+# Workflow REAL que publica el portafolio del equipo en GitHub Pages.
+# Código idéntico al original; solo se agregaron comentarios.
+#
+# Qué es GitHub Pages: hosting GRATIS de sitios ESTÁTICOS (HTML/CSS/JS, sin
+# servidor ni base de datos) directamente desde un repo.
+#
+# Requisito previo (una sola vez, en la web de GitHub):
+#   Settings -> Pages -> Build and deployment -> Source = "GitHub Actions"
+# Sin eso, el job de deploy falla aunque el YAML esté bien.
+#
+# Esto es DESPLIEGUE CONTINUO (CD) en su forma más pura: cada push a main
+# termina, sin intervención humana, en el sitio público actualizado.
+# =============================================================================
+
+name: Deploy static site to Pages
+
+on:
+  push:
+    branches: [main]      # cada push a main republica el sitio
+  workflow_dispatch:      # botón manual por si quieres redeplegar sin cambiar nada
+
+# PERMISOS del token automático (GITHUB_TOKEN) que recibe el workflow.
+# Principio de mínimo privilegio: solo lo necesario.
+permissions:
+  contents: read          # leer el código del repo (para el checkout)
+  pages: write            # publicar en GitHub Pages
+  id-token: write         # pedir un token OIDC: así deploy-pages demuestra a Pages
+                          # que la petición viene de ESTE workflow, sin contraseñas
+
+# CONCURRENCIA: si haces dos pushes seguidos, no tiene sentido publicar los dos.
+concurrency:
+  group: pages            # todas las corridas de este workflow comparten el grupo "pages"
+  cancel-in-progress: true  # si llega una nueva, cancela la que estaba en curso
+
+jobs:
+  deploy:                 # un solo job: aquí no hay "build" (el sitio ya es HTML puro)
+    # ENVIRONMENT: un "ambiente" de despliegue con nombre. GitHub muestra en la
+    # portada del repo el último deploy a github-pages y su URL. En proyectos
+    # grandes los environments (staging, production) permiten exigir aprobación
+    # manual o tener secrets propios.
+    environment:
+      name: github-pages
+      # La URL publicada sale del OUTPUT del step con id "deployment" (ver abajo).
+      # ${{ ... }} = expresión que GitHub evalúa en tiempo de ejecución.
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout                     # `name:` = etiqueta legible en la interfaz
+        uses: actions/checkout@v4          # baja el HTML/CSS/JS del repo
+      - name: Configure Pages
+        uses: actions/configure-pages@v5   # prepara metadatos de Pages (URL base, etc.)
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3   # empaqueta el sitio como artefacto
+        with:                                     # especial (tar) que Pages entiende
+          path: .                          # TODO el repo es el sitio (index.html en la raíz)
+      - name: Deploy to GitHub Pages
+        id: deployment                     # id para poder leer sus outputs arriba
+        uses: actions/deploy-pages@v4      # toma ese artefacto y lo publica

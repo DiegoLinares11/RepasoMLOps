@@ -1,0 +1,48 @@
+# =============================================================================
+# Plantilla de .gitignore para un proyecto de Python / ML
+# =============================================================================
+# En tu proyecto este archivo se llama ".gitignore" (con punto, sin extensión)
+# y va en la raíz del repo. Aquí se llama gitignore-python.txt para que no
+# afecte a esta carpeta de ejemplos.
+#
+# Cada línea es un patrón: Git NO rastrea los archivos que coinciden.
+#   carpeta/   -> ignora la carpeta entera
+#   *.ext      -> ignora todos los archivos con esa extensión
+#   !archivo   -> EXCEPCIÓN: vuelve a incluir algo que un patrón anterior ignoró
+# =============================================================================
+
+# --- Ambientes virtuales: NUNCA se suben -----------------------------------------
+# Pesan cientos de MB, guardan rutas absolutas de TU máquina (pyvenv.cfg) y
+# ejecutables de TU sistema operativo (.exe en Windows). Lo que se sube es la
+# receta: requirements.txt / pyproject.toml / lock.
+.venv/
+venv/
+env/
+
+# --- Caché de Python (se regenera sola) ---------------------------------------------
+__pycache__/
+*.py[cod]
+
+# --- Resultados de construir un paquete (tema 08) ------------------------------------
+dist/
+build/
+*.egg-info/
+
+# --- Secretos: tokens de PyPI, contraseñas de la base (temas 08 y 09) ----------------
+.env
+.env.*
+# la PLANTILLA sí se sube, sin valores reales. (Ojo: .gitignore NO admite
+# comentarios al final de una línea; siempre van en su propia línea.)
+!.env.example
+
+# --- Artefactos de ML (el modelo es estado, no código) --------------------------------
+*.joblib
+*.pkl
+mlruns/
+
+# --- Jupyter y editores ----------------------------------------------------------------
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# OJO: .python-version y los lock files (uv.lock, poetry.lock) SÍ se suben.
