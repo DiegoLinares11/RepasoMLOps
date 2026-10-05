@@ -1,6 +1,6 @@
 # 08 · Empaquetar y publicar una librería en TestPyPI
 
-🎬 Video: `publicar-paquete\publicar-paquete-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/08-publicar-paquete-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/08-publicar-paquete-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 ## 🧱 Conocimiento previo
 

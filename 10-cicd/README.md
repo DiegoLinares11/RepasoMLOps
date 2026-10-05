@@ -1,6 +1,6 @@
 # 10 · CI/CD con GitHub Actions y compuerta de calidad
 
-🎬 Video: `cicd\cicd-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 ## 🧱 Conocimiento previo
 

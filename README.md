@@ -10,42 +10,33 @@ o empatan. Cada tema le agrega una pieza nueva a ese mismo proyecto.
 
 ## 🗺️ Ruta de estudio
 
-| # | Tema | 🎬 Carpeta del video | Entrega del curso |
+| # | Tema | 🎬 Video | Entrega del curso |
 |---|---|---|---|
-| [00](00-por-que-mlops/) | **¿Por qué MLOps?** Ciclo de vida, madurez, drift | `mlops-general` ⭐ | Visión general |
-| [01](01-champions-eda/) | Análisis exploratorio del dataset y fuga de información | `champions` | Ejercicio 1 |
-| [02](02-overfitting/) | Sobreajuste, sesgo-varianza y validación cruzada | `overfitting` | Primeros videos |
-| [03](03-caso-gasolina/) | Caso de estudio: precios de combustible en Guatemala | `caso-gasolina` | Caso de Estudio 1 |
-| [04](04-pipelines-datos/) | Pipelines de datos y comandos de pandas | `pipelines-datos` | Ejercicio 2 + Tarea 3 |
-| [05](05-pipeline-sklearn/) | Pipeline de scikit-learn empaquetado | `pipeline-sklearn` | Actividad 1 |
-| [06](06-hiperparametros/) | Calibración de hiperparámetros | `hiperparametros` | Actividad 3 |
-| [07](07-ambientes-virtuales/) | Ambientes virtuales y dependencias | `ambientes-virtuales` | Taller 2 |
-| [08](08-publicar-paquete/) | Empaquetar y publicar en TestPyPI | `publicar-paquete` | Actividad 6 + Tarea 4 |
-| [09](09-docker/) | Docker, Compose y microservicios | `docker` | Actividad 4 |
-| [10](10-cicd/) | CI/CD con GitHub Actions y compuerta de calidad | `cicd` | Taller 1 + Actividad 5 + Ejercicio 3 |
-| [11](11-databricks/) | Databricks, medallón, Unity Catalog y MLflow | `databricks` | Ejercicio 4 + Actividad 7 |
+| [00](00-por-que-mlops/) | **¿Por qué MLOps?** Ciclo de vida, madurez, drift | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/00-por-que-mlops-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/00-por-que-mlops-en.mp4) ⭐ | Visión general |
+| [01](01-champions-eda/) | Análisis exploratorio del dataset y fuga de información | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/01-champions-eda-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/01-champions-eda-en.mp4) | Ejercicio 1 |
+| [02](02-overfitting/) | Sobreajuste, sesgo-varianza y validación cruzada | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/02-overfitting-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/02-overfitting-en.mp4) | Primeros videos |
+| [03](03-caso-gasolina/) | Caso de estudio: precios de combustible en Guatemala | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/03-caso-gasolina-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/03-caso-gasolina-en.mp4) | Caso de Estudio 1 |
+| [04](04-pipelines-datos/) | Pipelines de datos y comandos de pandas | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/04-pipelines-datos-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/04-pipelines-datos-en.mp4) | Ejercicio 2 + Tarea 3 |
+| [05](05-pipeline-sklearn/) | Pipeline de scikit-learn empaquetado | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/05-pipeline-sklearn-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/05-pipeline-sklearn-en.mp4) | Actividad 1 |
+| [06](06-hiperparametros/) | Calibración de hiperparámetros | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/06-hiperparametros-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/06-hiperparametros-en.mp4) | Actividad 3 |
+| [07](07-ambientes-virtuales/) | Ambientes virtuales y dependencias | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/07-ambientes-virtuales-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/07-ambientes-virtuales-en.mp4) | Taller 2 |
+| [08](08-publicar-paquete/) | Empaquetar y publicar en TestPyPI | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/08-publicar-paquete-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/08-publicar-paquete-en.mp4) | Actividad 6 + Tarea 4 |
+| [09](09-docker/) | Docker, Compose y microservicios | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/09-docker-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/09-docker-en.mp4) | Actividad 4 |
+| [10](10-cicd/) | CI/CD con GitHub Actions y compuerta de calidad | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/10-cicd-en.mp4) | Taller 1 + Actividad 5 + Ejercicio 3 |
+| [11](11-databricks/) | Databricks, medallón, Unity Catalog y MLflow | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-en.mp4) | Ejercicio 4 + Actividad 7 |
 | [12](12-simulacro/) | **Simulacro**: 50 preguntas con respuestas | — | Todos |
 
 ## 🎬 Dónde están los videos
 
-Los videos viven en mi compu, no en el repo, porque pesan demasiado para GitHub:
+Todos los videos están en el Release **[Videos de repaso](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)** del repo, en español y
+en inglés. Los links de la tabla de arriba y del inicio de cada tema abren el video directo.
 
-```
-C:\Users\dlinares\Documents\videos-ia\estudio\out\<carpeta>\
-    <carpeta>-es.mp4        video en español
-    <carpeta>-en.mp4        video en inglés
-    revision-es.png         hoja de revisión en español
-    revision-en.png         hoja de revisión en inglés
-```
+Se subieron como archivos del Release y no al repo porque pesan unos 20 MB cada uno: así el
+`git clone` sigue siendo liviano. El `.gitignore` excluye `*.mp4` para que no se suban por
+accidente.
 
-Por ejemplo, el general en español es
-`C:\Users\dlinares\Documents\videos-ia\estudio\out\mlops-general\mlops-general-es.mp4`.
-
-Los videos de `champions` y `overfitting` son los dos primeros, todavía con el
-Chepe viejo.
-
-El `.gitignore` excluye `*.mp4`, así que aunque copies videos dentro del repo no se
-suben por accidente.
+Los videos de `01-champions-eda` y `02-overfitting` son los dos primeros, todavía con el Chepe
+viejo.
 
 ## 📁 Qué hay en cada tema
 

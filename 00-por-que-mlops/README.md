@@ -1,6 +1,6 @@
 # 00 · ¿Por qué MLOps?
 
-🎬 Video: `mlops-general\mlops-general-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/00-por-que-mlops-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/00-por-que-mlops-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 Este es el tema "mapa": explica **qué problema resuelve MLOps** y cómo cada tema del curso
 (01 a 11) arma una pieza del rompecabezas. Si solo tienes tiempo para un tema antes del

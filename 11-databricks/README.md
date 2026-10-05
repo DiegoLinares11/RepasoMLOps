@@ -1,6 +1,6 @@
 # 11 · Databricks: lakehouse, medallón, Unity Catalog y MLflow
 
-🎬 Video: `databricks\databricks-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/11-databricks-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 ## 🧱 Conocimiento previo
 

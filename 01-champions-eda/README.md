@@ -1,6 +1,6 @@
 # 01 · EDA del dataset de la Champions League
 
-🎬 Video: `champions\champions-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/01-champions-eda-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/01-champions-eda-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 El análisis exploratorio (EDA) del Ejercicio 1 / Lab 02 fue la base de **todo** el curso:
 cada cosa rara que encontramos en el CSV se convirtió después en una línea de código del

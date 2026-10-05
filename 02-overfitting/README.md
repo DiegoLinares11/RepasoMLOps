@@ -1,6 +1,6 @@
 # 02 · Sobreajuste, sesgo-varianza y validación cruzada
 
-🎬 Video: `overfitting\overfitting-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/02-overfitting-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/02-overfitting-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 El sobreajuste es la razón número uno por la que un modelo "espectacular en el notebook"
 falla en producción. Este tema explica cómo detectarlo, cómo medir bien un modelo con pocos

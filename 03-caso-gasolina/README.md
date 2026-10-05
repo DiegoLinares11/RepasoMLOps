@@ -1,6 +1,6 @@
 # 03 · Caso de estudio: precios de combustible en Guatemala
 
-🎬 Video: `caso-gasolina\caso-gasolina-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/03-caso-gasolina-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/03-caso-gasolina-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 En los demás temas el dataset ya existía (un CSV de la Champions). En el proyecto final
 (PF-ML, Caso de Estudio 1) **no hay datos**: los precios viven en fotografías de

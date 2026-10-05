@@ -1,6 +1,6 @@
 # 09 · Docker, Docker Compose y microservicios
 
-🎬 Video: `docker\docker-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/09-docker-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/09-docker-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 ## 🧱 Conocimiento previo
 

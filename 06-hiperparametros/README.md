@@ -1,6 +1,6 @@
 # 06 · Calibración de hiperparámetros con pipelines
 
-🎬 Video: `hiperparametros\hiperparametros-es.mp4` (también en inglés: `-en.mp4`, y hojas de revisión `revision-es.png`).
+🎬 Video: [▶️ en español](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/06-hiperparametros-es.mp4) · [▶️ in English](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/06-hiperparametros-en.mp4) · [todos los videos](https://github.com/DiegoLinares11/RepasoMLOps/releases/tag/videos)
 
 ## 🧱 Conocimiento previo
 
