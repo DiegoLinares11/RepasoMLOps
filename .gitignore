@@ -6,6 +6,8 @@ venv/
 *.joblib
 *.pkl
 mlruns/
+mlflow.db
+mlartifacts/
 dist/
 build/
 *.egg-info/

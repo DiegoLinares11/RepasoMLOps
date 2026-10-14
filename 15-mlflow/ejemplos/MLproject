@@ -1,0 +1,24 @@
+# MLflow Project: permite correr el entrenamiento con `mlflow run`.
+#
+#   mlflow run . --env-manager local                      # todas las familias
+#   mlflow run . --env-manager local -P familia=svc       # una sola
+#   mlflow run . -e registrar --env-manager local         # y registra la mejor
+#
+# --env-manager local usa el ambiente activo (taller3-mlops). Sin esa opción,
+# MLflow crearía un ambiente nuevo de conda a partir de environment.yml.
+name: taller3-champions
+
+conda_env: environment.yml
+
+entry_points:
+  main:
+    parameters:
+      familia: {type: string, default: todas}
+      n_iter: {type: int, default: 40}
+    command: "taller3-entrenar --familia {familia} --n-iter {n_iter}"
+
+  registrar:
+    parameters:
+      familia: {type: string, default: todas}
+      n_iter: {type: int, default: 40}
+    command: "taller3-entrenar --familia {familia} --n-iter {n_iter} --registrar"

@@ -27,6 +27,7 @@ o empatan. Cada tema le agrega una pieza nueva a ese mismo proyecto.
 | [12](12-simulacro/) | **Simulacro**: 50 preguntas con respuestas | — | Todos |
 | [13](13-entry-points/) | Entry points: el pipeline como comandos y plugins | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/13-entry-points-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/13-entry-points-en.mp4) | Actividad 9 |
 | [14](14-caso-mcdonalds/) | Caso de estudio: el sistema de puntos de MiMcDonald's | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/14-caso-mcdonalds-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/14-caso-mcdonalds-en.mp4) | Caso de Estudio 2 |
+| [15](15-mlflow/) | MLflow: seguimiento de experimentos, autolog y Model Registry | [ES](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/15-mlflow-es.mp4) · [EN](https://github.com/DiegoLinares11/RepasoMLOps/releases/download/videos/15-mlflow-en.mp4) | Taller 3 |
 
 ## 🎬 Dónde están los videos
 
@@ -77,5 +78,6 @@ python tools/build_nb.py 05-pipeline-sklearn/repaso.py
 - [Tarea4-MLOPS](https://github.com/DiegoLinares11/Tarea4-MLOPS): paquete publicado en TestPyPI.
 - [Actividad-9-MLOPS](https://github.com/DiegoLinares11/Actividad-9-MLOPS): entry points, plugins y Makefile.
 - [MLOPS-Caso-de-estudio-2](https://github.com/DiegoLinares11/MLOPS-Caso-de-estudio-2): diagnóstico del sistema de puntos MiMcDonald's (Caso de Estudio 2).
+- [MLFlow](https://github.com/DiegoLinares11/MLFlow): MLflow con el pipeline de scikit-learn y el tutorial de MLflow (Taller 3).
 - [Portafolio-MLOPS](https://github.com/Andyfer004/Portafolio-MLOPS): portafolio del equipo, Taller 1, Ejercicio 2 y Tarea 3.
 - [PF-ML](https://github.com/Andyfer004/PF-ML): proyecto final de precios de combustible.
